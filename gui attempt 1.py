@@ -3,31 +3,57 @@ from tkinter import *
 
 root = Tk()
 root.title('FYP GUI')
-root.geometry("500x450")
+root.geometry("200x450")
 
-# window settings
-stage_text = Text(root, width = 40, height = 10, font = ("Helvetica", 16))
-stage_text.pack(pady=20, padx=20)
+# stage text box settings
+stage_title_label = Label(root, text = 'Stage')
+stage_textbox = Text(root, width = 5, height = 2, font = ("Helvetica", 9))
 
 ###submit button. this turns text input into variables and clears text boxes
 ##define functions
 #get text from text box
 def get_text():
-    stage_label.config(text=stage_text.get(1.0, END)), stage_text.delete(1.0, END)
+    stage_label.config(text=stage_textbox.get(1.0, END)), stage_textbox.delete(1.0, END)
+    blood_lactate_label.config(text=blood_lactate_textbox.get(1.0, END)), blood_lactate_textbox.delete(1.0, END)
+    velocity_label.config(text=velocity_textbox.get(1.0, END)), velocity_textbox.delete(1.0, END)
+
 
 
 ##create button
 button_frame = Frame(root)
-button_frame.pack()
 
 get_text_button = Button(button_frame, text="Submit", command = get_text)
-get_text_button.grid(row=0, column=1, padx=20)
+get_text_button.grid(row=1, column=1, padx=5)
 
 #labels
 stage_label = Label(root, text = '')
-stage_label.pack(pady=20)
+blood_lactate_label = Label(root, text = '')
+velocity_label = Label(root, text = '')
 
+#---------------------
+#blood lactate textbox and title
+blood_lactate_title_label = Label(root, text = 'Blood Lactate')
+blood_lactate_textbox = Text(root, width = 5, height = 2, font = ("Helvetica", 9))
+#---------------------
+#velocity text box and title
+velocity_title_label = Label(root, text = 'Velocity')
+velocity_textbox = Text(root, width = 5, height = 2, font = ("Helvetica", 9))
+#---------------------
+#layout
+stage_title_label.pack()
+stage_textbox.pack(pady=5, padx=5)
+stage_label.pack(pady=1)
 
+blood_lactate_title_label.pack(pady=5)
+blood_lactate_textbox.pack(pady=5)
+blood_lactate_label.pack(pady=1)
+
+velocity_title_label.pack(pady=5)
+velocity_textbox.pack(pady=5)
+velocity_label.pack(pady=1)
+
+button_frame.pack(pady=5)
+#---------------------
 
 root.mainloop()
 
