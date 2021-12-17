@@ -1,22 +1,75 @@
 import csv
 from tkinter import *
+from tkinter import ttk
 
 root = Tk()
 root.title('FYP GUI')
-root.geometry("200x450")
+root.geometry("400x550")
 
-# stage text box settings
+#make tree
+user_data_tree = ttk.Treeview(root)
+user_data_tree['columns'] = ('Stage', 'Blood Lactate', 'Velocity')
+
+user_data_tree.column('#0', width = 0)
+user_data_tree.column('Stage', width = 130)
+user_data_tree.column('Blood Lactate', width = 130)
+user_data_tree.column('Velocity', width = 130)
+
+user_data_tree.heading('Stage', text = 'Stage')
+user_data_tree.heading('Blood Lactate', text = 'Blood Lactate')
+user_data_tree.heading('Velocity', text = 'Velocity')
+
+
+#create csv file, to which we will add user input
+user_data_open = open('user_data.csv', 'w', newline = '')
+
+#define variables
+stage_var = StringVar()
+blood_lactate_var = StringVar()
+velocity_var = StringVar()
+
+# stage text box and title
 stage_title_label = Label(root, text = 'Stage')
-stage_textbox = Text(root, width = 5, height = 2, font = ("Helvetica", 9))
+stage_textbox = Entry(root, textvariable = stage_var, width = 5,font = ("Helvetica", 9))
+#---------------------
+#blood lactate textbox and title
+blood_lactate_title_label = Label(root, text = 'Blood Lactate')
+blood_lactate_textbox = Entry(root, textvariable=blood_lactate_var, width = 5, font = ("Helvetica", 9))
+#---------------------
+#velocity text box and title
+velocity_title_label = Label(root, text = 'Velocity')
+velocity_textbox = Entry(root, textvariable=velocity_var, width = 5, font = ("Helvetica", 9))
+#---------------------
 
 ###submit button. this turns text input into variables and clears text boxes
 ##define functions
 #get text from text box
 def get_text():
-    stage_label.config(text=stage_textbox.get(1.0, END)), stage_textbox.delete(1.0, END)
-    blood_lactate_label.config(text=blood_lactate_textbox.get(1.0, END)), blood_lactate_textbox.delete(1.0, END)
-    velocity_label.config(text=velocity_textbox.get(1.0, END)), velocity_textbox.delete(1.0, END)
 
+    #save the user input
+    stage=stage_var.get()
+    blood_lactate=blood_lactate_var.get()
+    velocity=velocity_var.get()
+
+    #create list with user input and add as a row to csv file
+    row_list = [stage, blood_lactate, velocity]
+    iid = int(1)
+    user_data_tree.insert(index='end', values = row_list, parent='')
+    iid += 1
+
+    #clear list values
+    row_list.clear()
+
+
+#display the user input as a label
+    stage_label.config(text=stage)
+    blood_lactate_label.config(text=blood_lactate)
+    velocity_label.config(text=velocity)
+
+#empty the text boxes
+    stage_textbox.delete(0, END)
+    blood_lactate_textbox.delete(0, END)
+    velocity_textbox.delete(0, END)
 
 
 ##create button
@@ -30,15 +83,7 @@ stage_label = Label(root, text = '')
 blood_lactate_label = Label(root, text = '')
 velocity_label = Label(root, text = '')
 
-#---------------------
-#blood lactate textbox and title
-blood_lactate_title_label = Label(root, text = 'Blood Lactate')
-blood_lactate_textbox = Text(root, width = 5, height = 2, font = ("Helvetica", 9))
-#---------------------
-#velocity text box and title
-velocity_title_label = Label(root, text = 'Velocity')
-velocity_textbox = Text(root, width = 5, height = 2, font = ("Helvetica", 9))
-#---------------------
+
 #layout
 stage_title_label.pack()
 stage_textbox.pack(pady=5, padx=5)
@@ -53,9 +98,10 @@ velocity_textbox.pack(pady=5)
 velocity_label.pack(pady=1)
 
 button_frame.pack(pady=5)
+
+user_data_tree.pack()
 #---------------------
 
-root.mainloop()
 
 """
 file = open('C:\\Users\\harry\\OneDrive\\Documents\\college\\fyp\\data.csv', 'w', newline='')
@@ -74,3 +120,5 @@ writer.writerow(data2)
 
 file.close()
 """
+
+root.mainloop()
