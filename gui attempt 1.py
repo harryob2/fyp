@@ -1,14 +1,27 @@
 import csv
+import os
 from tkinter import *
 from tkinter import ttk
 
+##what to do next
+#need to figure out how to export data to csv, everything else is cosmetic
+
+#global variable for data to export
+user_data = []
+
 root = Tk()
 root.title('FYP GUI')
-root.geometry("400x550")
+root.geometry("450x550")
+
+#create big background squares to organize all of our little boxes and buttons
+#the names are currently poor, but I will change them later
+wrapper1 = LabelFrame(root, text = 'Current Data')
+wrapper2 = LabelFrame(root, text = 'Past Data')
+
 
 #make tree
-user_data_tree = ttk.Treeview(root)
-user_data_tree['columns'] = ('Stage', 'Blood Lactate', 'Velocity')
+user_data_tree = ttk.Treeview(wrapper2, columns=('Stage', 'Blood Lactate', 'Velocity'))
+#user_data_tree['columns'] = ('Stage', 'Blood Lactate', 'Velocity')
 
 user_data_tree.column('#0', width = 0)
 user_data_tree.column('Stage', width = 130)
@@ -29,16 +42,16 @@ blood_lactate_var = StringVar()
 velocity_var = StringVar()
 
 # stage text box and title
-stage_title_label = Label(root, text = 'Stage')
-stage_textbox = Entry(root, textvariable = stage_var, width = 5,font = ("Helvetica", 9))
+stage_title_label = Label(wrapper1, text = 'Stage')
+stage_textbox = Entry(wrapper1, textvariable = stage_var, width = 5,font = ("Helvetica", 9))
 #---------------------
 #blood lactate textbox and title
-blood_lactate_title_label = Label(root, text = 'Blood Lactate')
-blood_lactate_textbox = Entry(root, textvariable=blood_lactate_var, width = 5, font = ("Helvetica", 9))
+blood_lactate_title_label = Label(wrapper1, text = 'Blood Lactate')
+blood_lactate_textbox = Entry(wrapper1, textvariable=blood_lactate_var, width = 5, font = ("Helvetica", 9))
 #---------------------
 #velocity text box and title
-velocity_title_label = Label(root, text = 'Velocity')
-velocity_textbox = Entry(root, textvariable=velocity_var, width = 5, font = ("Helvetica", 9))
+velocity_title_label = Label(wrapper1, text = 'Velocity')
+velocity_textbox = Entry(wrapper1, textvariable=velocity_var, width = 5, font = ("Helvetica", 9))
 #---------------------
 
 ###submit button. this turns text input into variables and clears text boxes
@@ -78,6 +91,7 @@ button_frame = Frame(root)
 get_text_button = Button(button_frame, text="Submit", command = get_text)
 get_text_button.grid(row=1, column=1, padx=5)
 
+
 #labels
 stage_label = Label(root, text = '')
 blood_lactate_label = Label(root, text = '')
@@ -85,6 +99,10 @@ velocity_label = Label(root, text = '')
 
 
 #layout
+wrapper1.pack(fill='both', expand='yes', padx=20, pady=20)
+wrapper2.pack(fill='both', expand='yes', padx=20, pady=20)
+
+
 stage_title_label.pack()
 stage_textbox.pack(pady=5, padx=5)
 stage_label.pack(pady=1)
@@ -103,7 +121,7 @@ user_data_tree.pack()
 #---------------------
 
 
-"""
+
 file = open('C:\\Users\\harry\\OneDrive\\Documents\\college\\fyp\\data.csv', 'w', newline='')
 
 header = ['stage', 'power', 'blood lactate']
@@ -119,6 +137,6 @@ writer.writerow(data2)
 
 
 file.close()
-"""
+
 
 root.mainloop()
