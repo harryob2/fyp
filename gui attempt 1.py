@@ -6,9 +6,6 @@ from tkinter import ttk
 import pandas as pd
 
 
-##what to do next
-#need to figure out how to export data to csv, everything else is cosmetic
-
 #global variable for data to export
 column_headings = ['Stage', 'Blood Lactate', 'Velocity']
 user_data = pd.DataFrame(columns = column_headings)
@@ -77,7 +74,6 @@ def get_text():
     #user_data = user_data.append(row_list, ignore_index = True)
     df_length = len(user_data)
     user_data.loc[df_length] = row_list
-    print(user_data)
     #clear list values
     row_list.clear()
 
