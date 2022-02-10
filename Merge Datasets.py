@@ -5,6 +5,11 @@ from tkinter import filedialog
 from tkinter import ttk
 from tkinter import messagebox
 import pandas
+import numpy as np
+from string import ascii_uppercase
+
+pandas.options.display.max_columns = None #this is so I can view the entire dataframe which helps me edit it.
+pandas.options.display.max_rows = 128
 
 root = Tk()
 root.title('FYP GUI - Merge Datasets')
@@ -24,6 +29,7 @@ def import_HR():
     HR_file_name_label.pack() #print the file name so the user receives confirmation of which dataset they have imported
 
 
+
 def import_GUI(): #the same as the above code but for importing the dataset from the other GUI I made as part of this FYP
     global GUI_df
     GUI_file_path = filedialog.askopenfilename(title = "Import User Inputed Data")
@@ -34,7 +40,15 @@ def import_GUI(): #the same as the above code but for importing the dataset from
 
 def run_program(): #merge the datasets into one
     if len(HR_df.index) > 0 and len(GUI_df.index) > 0: #function will only run if datasets have been loaded successfully
-        print("hello world")
+
+        HR_df_clean = HR_df.drop([0,1], axis=0)
+        cols = np.r_[0:9, 25:30, 41:45, 46, 49:58, 64, 65, 70, 75:107, 109:117, 119, 121, 125:128]
+        HR_df_cleaner = HR_df_clean.drop(HR_df_clean.columns[cols],axis=1)
+
+        global stage_column
+        stage_list = ['Stage', '', '']
+        stage_column = pandas.DataFrame(stage_list)
+        length_of_test = 20
 
     else: #if the datasets haven't run successfully the user is notified
         messagebox.showerror(title = "Data not imported", message = "The datasets have not been successfully loaded. Please ensure you have selected the correct .csv files and try again.")
