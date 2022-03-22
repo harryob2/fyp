@@ -7,7 +7,7 @@ the physical assessment involves putting the athlete on a treadmill and measurin
 athletes use this info to inform their training routine to increase training efficiency
 #
 the assessment is conducted entirely on a treadmill over the course of 15-20 minutes
-at each discrete stage of the assessment he increases the speed of the treadmill, waits 3 minutes, and collects blood lactate data
+at each discrete stage of the assessment he increases the speed of the treadmill, waits 3 minutes, and collects blood lactate data.
 Heart rate data and VO2 data is collected digitally and automatically exported to a csv file. 
 #
 my supervisor Neil has to tediously collate all this data into 1 dataset manually, and calculate a bunch of secondary metrics and graphs manually
