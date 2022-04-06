@@ -101,10 +101,9 @@ velocity_var = StringVar()
 stage_finish_time_minute_var = StringVar()
 stage_finish_time_second_var = StringVar()
 
-# stage text box and title
+# stage  title
 stage_title_label = Label(wrapper1, text='Stage')
-# stage_textbox = Entry(wrapper1, textvariable = stage_var, width = 5,font = ("Helvetica", 9))
-stage_new_label = Label(wrapper1, text='0 (warm-up)')
+stage_new_label = Label(wrapper1, text='0 (warm-up)') # special label at beginning
 # ---------------------
 # blood lactate textbox and title
 blood_lactate_title_label = Label(wrapper1, text='Blood Lactate')
@@ -218,9 +217,6 @@ def select_record():
     stage_var_temp = values[0]
     stage_new_label.config(text=stage_var_temp)
 
-    # TEMPORARY
-    print(selected[3])
-
 def update_record():
     # Grab record number
     selected = user_data_tree.focus()
@@ -299,7 +295,7 @@ generate_report_tab = Frame(my_notebook)
 # frames where I will place everything later
 wrapper21 = LabelFrame(generate_report_tab, text='COSMED Data')
 wrapper22 = LabelFrame(generate_report_tab, text='GUI Data')
-wrapper23 = LabelFrame(generate_report_tab, text='Run Program')
+wrapper23 = LabelFrame(generate_report_tab, text='Generate Report')
 
 # create dataframes which I will add the imported csv data to
 HR_df = pandas.DataFrame()
