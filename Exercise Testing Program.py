@@ -460,7 +460,6 @@ def run_program():  # merge the datasets into one
                                        label=athlete_stats_df.columns[1] + ' Data', marker='o', linestyle='none',
                                        color='red')
         hrt2.set_ylabel(athlete_stats_df.columns[1], color='red')
-        hrt2.plot()
 
         # velocity/power interpolated line plot
         g = interp1d(stage_time_array_d2n, velocity_array, kind='cubic')
