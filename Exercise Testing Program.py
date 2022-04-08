@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import pandas
 import numpy as np
+import numpy.linalg
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
 
@@ -425,6 +426,7 @@ def run_program():  # merge the datasets into one
 
         # making the path for each plot a global variable so it can be called in other functions
         global plot_1_path, plot_2_path, plot_3_path, plot_4_path, plot_5_path, plot_6_path
+        global xnew
 
         # working hr & power/velocity vs time plot
         plt.figure(1)
@@ -661,6 +663,31 @@ def run_program():  # merge the datasets into one
         VO2_Max = round(max(VO2_rolling_mean), 2)
 
         # =============================================
+        # DMax Method
+        # =============================================
+        global perp_dist
+        perp_dist = []
+        for i in range((len(xnew))):
+            p1 = (xnew[0], l(xnew[0]))      # make x and y coordinates for first point blood lactate curve
+            p2 = (xnew[-1], l(xnew[-1]))    # last point on blood lactate curve
+            p3 = (xnew[i], l(xnew[i]))      # point on blood lactate curve
+                                            # we will use p1 and p2 to construct a straight line, and measure the
+            p1 = np.asarray(p1)             # perpendicular distance between every point on the blood lactate curve
+            p2 = np.asarray(p2)             # and this straight line. then we find the maximum perpendicular distance,
+            p3 = np.asarray(p3)             # and this is the DMax point.
+                                            # note: l is the blood lactate interpolated line function used for plots
+            d = numpy.linalg.norm(np.cross(p2 - p1, p1 - p3)) / numpy.linalg.norm(p2 - p1)
+            perp_dist.append(d)
+
+        max_index = perp_dist.index(max(perp_dist))
+        global dmax_velocity
+        global dmax_blood_lactate
+        dmax_velocity = xnew[max_index]
+        dmax_blood_lactate = l(xnew[max_index])
+
+
+
+        # =============================================
         # Create Athlete Info Table
         # =============================================
         athlete_info_index = HR_df.iloc[0:6, 0]
@@ -671,7 +698,11 @@ def run_program():  # merge the datasets into one
         athlete_info2_df = pandas.DataFrame(athlete_info2.values, index=athlete_info_index2)
         full_athlete_info_df = pandas.concat([athlete_info_df, athlete_info2_df])
         full_athlete_info_df.loc["VO2 Max"] = VO2_Max # add VO2 Max to table
-        full_athlete_info_df.iloc[6,] = round(pandas.to_numeric(full_athlete_info_df.iloc[6,]), 2) # round to 2 dp
+        full_athlete_info_df.loc["DMax Velocity"] = dmax_velocity # add DMax velocity to table
+        full_athlete_info_df.loc["DMax Blood Lactate"] = dmax_blood_lactate # add DMax blood lactate to table
+        full_athlete_info_df.iloc[6,] = round(pandas.to_numeric(full_athlete_info_df.iloc[6,]), 2) # round VO2 Max to 2 dp
+        full_athlete_info_df.iloc[9,] = round(pandas.to_numeric(full_athlete_info_df.iloc[9,]), 2) # round DMax velocity to 2 dp
+        full_athlete_info_df.iloc[10,] = round(pandas.to_numeric(full_athlete_info_df.iloc[10,]), 2) # round DMax blood lactate to 2 dp
 
         plt.figure(7)
         fig, ax = plt.subplots()
