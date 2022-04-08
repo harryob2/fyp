@@ -698,7 +698,7 @@ def run_program():  # merge the datasets into one
         athlete_info2_df = pandas.DataFrame(athlete_info2.values, index=athlete_info_index2)
         full_athlete_info_df = pandas.concat([athlete_info_df, athlete_info2_df])
         full_athlete_info_df.loc["VO2 Max"] = VO2_Max # add VO2 Max to table
-        full_athlete_info_df.loc["DMax Velocity"] = dmax_velocity # add DMax velocity to table
+        full_athlete_info_df.loc["DMax " + column_3_heading.get()] = dmax_velocity # add DMax power/velocity to table
         full_athlete_info_df.loc["DMax Blood Lactate"] = dmax_blood_lactate # add DMax blood lactate to table
         full_athlete_info_df.iloc[6,] = round(pandas.to_numeric(full_athlete_info_df.iloc[6,]), 2) # round VO2 Max to 2 dp
         full_athlete_info_df.iloc[9,] = round(pandas.to_numeric(full_athlete_info_df.iloc[9,]), 2) # round DMax velocity to 2 dp
