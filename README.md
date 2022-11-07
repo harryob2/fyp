@@ -5,6 +5,9 @@
 heres a link to a video explaining this project: https://youtu.be/btaakw9Dnvg
 heres a link to a google drive with accompanying files and a exe file to run the code without python: https://drive.google.com/drive/folders/1JfUs_2jM3s7dBMRaCIKQ5yPjo4wWUUVJ?usp=sharing
 
+here is a link to my conversion of this into a web app (WIP):
+https://github.com/harryob2/fyp-web-app
+
 in a nutshell, the program is for recording data, and merging the user-created dataset with another dataset to output a pdf data analytics report. 
 
 it is used to speed up the incremental exercise test process.
